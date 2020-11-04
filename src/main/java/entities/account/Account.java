@@ -1,5 +1,6 @@
-package entities;
+package entities.account;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -8,16 +9,17 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
+@Builder
 public class Account {
     @Id
     private String id;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(length = 20, nullable = false, unique = true)
     private String nickName;
 
-    @Column
+    @Column(length = 40, nullable = false, unique = true)
     private String email;
 }
