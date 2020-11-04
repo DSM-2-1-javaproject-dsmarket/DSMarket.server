@@ -1,6 +1,6 @@
-package entities.account.repository;
+package com.dsmarket.server.entities.account.repository;
 
-import entities.account.Account;
+import com.dsmarket.server.entities.account.Account;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

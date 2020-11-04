@@ -1,4 +1,4 @@
-package entities.account;
+package com.dsmarket.server.entities.account;
 
 import lombok.Builder;
 import lombok.Getter;
