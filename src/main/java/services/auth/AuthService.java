@@ -1,4 +1,4 @@
-package services.Auth;
+package services.auth;
 
 public interface AuthService {
     public SignInResponse signIn();

@@ -1,4 +1,4 @@
-package services.Auth;
+package services.auth;
 
 
 import org.springframework.stereotype.Service;
