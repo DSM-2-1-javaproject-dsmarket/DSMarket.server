@@ -1,4 +1,4 @@
-package com.dsmarket.server.security;
+package com.dsmarket.server.security.account_detail;
 
 import com.dsmarket.server.entities.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;

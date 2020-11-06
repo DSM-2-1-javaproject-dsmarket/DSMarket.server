@@ -1,8 +1,7 @@
-package com.dsmarket.server.security;
+package com.dsmarket.server.security.account_detail;
 
 import com.dsmarket.server.entities.account.Account;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
