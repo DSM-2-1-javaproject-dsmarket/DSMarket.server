@@ -4,8 +4,9 @@ package com.dsmarket.server.entities.post;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.DynamicInsert;
 
+import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Builder
+@DynamicInsert
 public class Post {
 
     @Id
@@ -35,13 +37,13 @@ public class Post {
     private Integer price;
 
     @Column(nullable = false)
-    private String post_user;
+    private String postUser;
 
     @Column(nullable = false)
-    private Date post_date;
+    private Date postDate;
 
     @Column(nullable = false)
-    private Integer post_type;
+    private Integer postType;
 
     @Column
     @ColumnDefault("false")

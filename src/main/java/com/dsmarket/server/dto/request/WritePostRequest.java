@@ -1,16 +1,13 @@
 package com.dsmarket.server.dto.request;
 
 import lombok.Builder;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.Id;
+import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
+
 
 @Builder
+@Getter
 public class WritePostRequest {
 
     @NotEmpty
@@ -19,16 +16,8 @@ public class WritePostRequest {
     @NotEmpty
     private String item;
 
-    @NotEmpty
     private Integer price;
 
-    @NotEmpty
-    private String post_user;
-
-    @NotEmpty
-    private Date post_date;
-
-    @NotEmpty
-    private Integer post_type;
+    private Integer postType;
 
 }

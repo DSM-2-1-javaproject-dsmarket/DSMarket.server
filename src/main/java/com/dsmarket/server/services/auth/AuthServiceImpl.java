@@ -5,6 +5,7 @@ import com.dsmarket.server.dto.response.SignInResponse;
 import com.dsmarket.server.entities.account.Account;
 import com.dsmarket.server.entities.account.repository.AccountRepository;
 import com.dsmarket.server.security.JwtProvider;
+import com.dsmarket.server.security.account_detail.RequestAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,12 @@ import javax.naming.AuthenticationException;
 public class AuthServiceImpl implements AuthService{
 
     private final JwtProvider jwtProvider;
-    private final AccountRepository accountRepository;
+
     private final PasswordEncoder passwordEncoder;
 
-    @Override
+    private final AccountRepository accountRepository;
+
+
     public String signIn(String id, String password) throws Exception{
         Account signInAccount = accountRepository.findById(id)
                 .filter(account -> passwordEncoder.matches(password, account.getPassword()))
@@ -29,7 +32,6 @@ public class AuthServiceImpl implements AuthService{
         return jwtProvider.createToken(signInAccount.getId());
     }
 
-    @Override
     public void temp() {
         accountRepository.save(Account.builder().email("fefe").id("fefe").nickName("fefe").password(passwordEncoder.encode("qwer")).build());
     }

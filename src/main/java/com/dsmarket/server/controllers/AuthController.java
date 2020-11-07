@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.dsmarket.server.services.auth.AuthServiceImpl;
 
-@RequestMapping("/auth")
+@RequestMapping("accounts/auth")
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
