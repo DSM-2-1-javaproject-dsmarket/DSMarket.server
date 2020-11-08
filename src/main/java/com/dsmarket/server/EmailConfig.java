@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
-@PropertySource("classpath:mail.properties")
+@PropertySource("classpath:/mail.properties")
 public class EmailConfig {
 	
     @Value("${mail.smtp.host}")
@@ -26,7 +26,6 @@ public class EmailConfig {
     
     @Value("${mail.smtp.auth}")
     private boolean auth;
-    
     @Value("${mail.smtp.starttls.enable}")
     private boolean starttls;
     @Value("${mail.smtp.starttls.required}")

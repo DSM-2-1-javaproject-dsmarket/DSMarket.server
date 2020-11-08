@@ -48,7 +48,7 @@ public class SendEmail implements MessageInterface{
 
 	
 	@Override
-	public String sendMessage(String dest) throws Exception 
+	public int sendMessage(String dest) throws Exception 
 	{
 		MimeMessage message = createMessage(dest);
 		        try 
@@ -58,8 +58,8 @@ public class SendEmail implements MessageInterface{
 		        }
 		        catch(MailException ex) 
 		        {
-		            throw new IllegalArgumentException();
+		        	return 404;
 		        }
-		        return key;
+		        return 201;
 	}
 }

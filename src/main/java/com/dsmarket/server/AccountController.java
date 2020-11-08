@@ -15,13 +15,12 @@ public class AccountController
 	@ResponseBody
 	public String validateEmail(@RequestBody ValidateParam dest) throws Exception
 	{
-		String key = mi.sendMessage(dest.getDest());
 		String ret = 
-				"{\n" + 
-				"   \"id\":\"sample_id\",\n" + 
-				"   \"pw\":\"sample_pw\",\n" + 
-				"   \"email\":\""+dest.getDest()+"\",\n" + 
-				"   \"key\":\""+key+"\"\n" + 
+				"{" + 
+				"\"id\":\"sample_id\"," + 
+				"\"pw\":\"sample_pw\"," + 
+				"\"email\":\""+dest.getDest()+"\"," + 
+				"\"key\":\""+1+"\"" + 
 				"}";
 		
 		return ret;
@@ -31,12 +30,11 @@ public class AccountController
 	@ResponseBody
 	public String register(@RequestBody RegisterParam reg) throws Exception
 	{
+		// TODO: connect to db
+		int key = mi.sendMessage(reg.getEmail());
 		String ret = 
-				"{\n" + 
-				"   \"id\":\""+reg.getId()+"\",\n" + 
-				"   \"pw\":\""+reg.getPw()+"\",\n" + 
-				"   \"nickname\":\""+reg.getNickname()+"\",\n" + 
-				"   \"email\":\""+reg.getEmail()+"\"\n" + 
+				"{" + 
+				"\"status\":\""+key+"\"" + 
 				"}";
 		
 		return ret;

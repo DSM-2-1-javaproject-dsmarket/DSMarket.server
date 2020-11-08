@@ -2,7 +2,7 @@ package com.dsmarket.server;
 
 public class RegisterParam
 {
-	String id, pw, nickname, email;
+	String id, password, nickname, email;
 
 	public String getId() 
 	{
@@ -15,11 +15,11 @@ public class RegisterParam
 
 	public String getPw() 
 	{
-		return pw;
+		return password;
 	}
 	public void setPw(String pw) 
 	{
-		this.pw = pw;
+		this.password = pw;
 	}
 
 	public String getNickname() {
