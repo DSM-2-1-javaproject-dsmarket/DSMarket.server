@@ -1,4 +1,4 @@
-package com.dsmarket.server;
+package com.dsmarket.server.services.mail;
 
 import java.util.Random;
 
@@ -12,7 +12,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SendEmail implements MessageInterface{
+public class MessageServiceImpl implements MessageService
+{
 	
 	@Autowired
 	JavaMailSender emailSender;
@@ -48,7 +49,7 @@ public class SendEmail implements MessageInterface{
 
 	
 	@Override
-	public int sendMessage(String dest) throws Exception 
+	public String[] sendMessage(String dest) throws Exception 
 	{
 		MimeMessage message = createMessage(dest);
 		        try 
@@ -58,8 +59,10 @@ public class SendEmail implements MessageInterface{
 		        }
 		        catch(MailException ex) 
 		        {
-		        	return 404;
+		        	String[] ret = {"","404","Email Not Found"};
+		        	return ret;
 		        }
-		        return 201;
+		        String[] ret = {key,"201",""};
+		        return ret;
 	}
 }
