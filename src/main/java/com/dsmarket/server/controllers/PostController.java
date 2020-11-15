@@ -10,7 +10,7 @@ import com.dsmarket.server.entities.post.Post;
 import com.dsmarket.server.security.account_detail.RequestAuthentication;
 import com.dsmarket.server.services.account.AccountService;
 import com.dsmarket.server.services.post.CreatePostForm;
-import com.dsmarket.server.services.post.PostsService;
+import com.dsmarket.server.services.post.PostService;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/posts")
 @RestController
 @RequiredArgsConstructor
-public class PostsController {
+public class PostController {
 
-    private final PostsService postsService;
+    private final PostService postService;
 
     private final AccountService accountService;
 
@@ -39,7 +39,7 @@ public class PostsController {
 
         Account writeAccount = accountService.getAccountById(requestAuthentication.getAccountId());
 
-        Post wrotePost = postsService.createPost(
+        Post wrotePost = postService.createPost(
                 CreatePostForm
                         .builder()
                         .item(writePostRequest.getItem())
@@ -58,7 +58,7 @@ public class PostsController {
 
     @GetMapping
     public List<GetPostsResponse> getPosts(@RequestBody GetPageRequest pageRequest) {
-        List<Post> posts = postsService.getPosts(PageRequest.of(
+        List<Post> posts = postService.getPosts(PageRequest.of(
                 pageRequest.getPage()
                 , pageRequest.getSize()
                 , pageRequest.getDirection()
@@ -68,6 +68,14 @@ public class PostsController {
         return posts.stream()
                 .map((e)-> modelMapper.map(e, GetPostsResponse.class))
                 .collect(Collectors.toList());
+    }
+
+
+    @DeleteMapping("/{id}")
+    public void deletePost(@PathVariable Integer id) {
+        Account requestAccount = accountService.getAccountById(requestAuthentication.getAccountId());
+
+
     }
 }
 

@@ -1,6 +1,7 @@
 package com.dsmarket.server.services.post;
 
 
+import com.dsmarket.server.entities.account.Account;
 import com.dsmarket.server.entities.post.Post;
 import com.dsmarket.server.entities.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PostsServiceImpl implements PostsService {
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
@@ -33,7 +34,24 @@ public class PostsServiceImpl implements PostsService {
         return postRepository.save(newPost);
     }
 
+    public Post getPost(Integer id){
+        return postRepository.findById(id)
+                .orElseThrow();
+    }
+
     public List<Post> getPosts(Pageable pageable){
         return postRepository.findAll(pageable).toList();
+    }
+
+    public void deletePost(Account account, Post post2delete){
+        throwIfNotPostedByAccount(account, post2delete);
+
+        postRepository.delete(post2delete);
+    }
+
+    private void throwIfNotPostedByAccount(Account account, Post post) {
+        if (post.getPostUser() != account.getId()) {
+            //throw;
+        }
     }
 }
