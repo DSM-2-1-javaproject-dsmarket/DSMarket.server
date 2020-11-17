@@ -8,6 +8,10 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import com.dsmarket.server.dto.request.RegisterRequest;
 
 @Configuration
 public class RedisConfig {
@@ -38,7 +42,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
+    public RedisConnectionFactory redisConnectionFactory() 
+    {
         
     	RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
         config.setHostName(hostname);
@@ -53,5 +58,14 @@ public class RedisConfig {
         		.build();
 
         return new LettuceConnectionFactory(config, clientConfig);
+    }
+    
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate()
+    {
+    	RedisTemplate<String, Object> rt = new RedisTemplate<>();
+    	rt.setConnectionFactory(redisConnectionFactory());
+    	rt.setKeySerializer(new StringRedisSerializer());
+    	return rt;
     }
 }
