@@ -2,6 +2,7 @@ package com.dsmarket.server.services.account;
 
 import com.dsmarket.server.entities.account.Account;
 import com.dsmarket.server.entities.account.repository.AccountRepository;
+import com.dsmarket.server.exeptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,6 @@ public class AccountServiceImpl implements AccountService{
 
     public Account getAccountById(String id){
         return accountRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(NotFoundException::new);
     }
 }

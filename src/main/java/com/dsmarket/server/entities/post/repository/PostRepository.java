@@ -9,4 +9,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Post save(Post post);
 
     Page<Post> findAll(Pageable pageable);
+
+    @Override
+    void delete(Post entity);
 }

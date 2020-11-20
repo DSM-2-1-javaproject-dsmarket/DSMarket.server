@@ -1,9 +1,8 @@
 package com.dsmarket.server.services.auth;
 
-import com.dsmarket.server.dto.response.SignInResponse;
-import com.dsmarket.server.entities.account.Account;
+import com.dsmarket.server.error.BusinessException;
 
 public interface AuthService {
-    public String signIn(String id, String password) throws Exception;
+    public String signIn(String id, String password) throws BusinessException;
     public void temp();
 }

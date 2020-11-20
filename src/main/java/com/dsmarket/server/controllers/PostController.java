@@ -3,6 +3,7 @@ package com.dsmarket.server.controllers;
 
 import com.dsmarket.server.dto.request.GetPageRequest;
 import com.dsmarket.server.dto.request.WritePostRequest;
+import com.dsmarket.server.dto.response.GetPostResponse;
 import com.dsmarket.server.dto.response.GetPostsResponse;
 import com.dsmarket.server.dto.response.WritePostResponse;
 import com.dsmarket.server.entities.account.Account;
@@ -57,7 +58,7 @@ public class PostController {
     }
 
     @GetMapping
-    public List<GetPostsResponse> getPosts(@RequestBody GetPageRequest pageRequest) {
+    public List<GetPostsResponse> getPosts(@RequestBody @Valid GetPageRequest pageRequest) {
         List<Post> posts = postService.getPosts(PageRequest.of(
                 pageRequest.getPage()
                 , pageRequest.getSize()
@@ -70,12 +71,38 @@ public class PostController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    GetPostResponse getPost(@PathVariable Integer id){
+        return modelMapper.map(postService.getPost(id), GetPostResponse.class);
+    }
+
 
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Integer id) {
         Account requestAccount = accountService.getAccountById(requestAuthentication.getAccountId());
+        Post post2delete = postService.getPost(id);
 
+        postService.checkPostEditAuthorization(requestAccount, post2delete);
+        postService.deletePost(post2delete);
+    }
 
+    @PutMapping("/{id}")
+    public void updatePost(@RequestBody WritePostRequest writePostRequest, @PathVariable Integer id){
+        Account requestAccount = accountService.getAccountById(requestAuthentication.getAccountId());
+        Post post2update = postService.getPost(id);
+
+        postService.checkPostEditAuthorization(requestAccount, post2update);
+        postService.updatePost(
+                post2update,
+                CreatePostForm
+                        .builder()
+                        .item(writePostRequest.getItem())
+                        .postAccountId(requestAccount.getId())
+                        .postType(writePostRequest.getPostType())
+                        .price(writePostRequest.getPrice())
+                        .tag(writePostRequest.getTag())
+                        .build()
+        );
     }
 }
 

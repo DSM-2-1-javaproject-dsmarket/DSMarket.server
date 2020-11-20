@@ -14,5 +14,9 @@ public interface PostService {
 
     public Post getPost(Integer id);
 
-    public void deletePost(Account account, Post post2delete);
+    public void checkPostEditAuthorization(Account account, Post post);
+
+    public void deletePost(Post post);
+
+    public Post updatePost(Post post, CreatePostForm postInfo);
 }

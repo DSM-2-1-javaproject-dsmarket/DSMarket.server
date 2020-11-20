@@ -5,7 +5,9 @@ import lombok.Getter;
 import org.springframework.data.domain.Sort;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Getter
@@ -13,10 +15,15 @@ import javax.validation.constraints.NotNull;
 @Valid
 public class GetPageRequest {
 
+    @NotNull
+    @Min(0)
     private int page;
 
+    @NotNull
+    @Min(1)
     private int size;
 
+    @NotNull
     private Sort.Direction direction;
 
 }
