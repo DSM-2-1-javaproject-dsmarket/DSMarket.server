@@ -3,20 +3,21 @@ package com.dsmarket.server.controllers;
 
 import com.dsmarket.server.dto.request.SignInRequest;
 import com.dsmarket.server.dto.response.SignInResponse;
+import com.dsmarket.server.error.BusinessException;
+import com.dsmarket.server.services.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import com.dsmarket.server.services.auth.AuthServiceImpl;
 
-@RequestMapping("/auth")
+@RequestMapping("accounts/auth")
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-    private final AuthServiceImpl authService;
+    private final AuthService authService;
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public SignInResponse signIn(@RequestBody SignInRequest signInRequest) throws Exception{
+    public SignInResponse signIn(@RequestBody SignInRequest signInRequest) throws BusinessException {
         String jwt = authService.signIn(signInRequest.getId(), signInRequest.getPassword());
 
         return SignInResponse
