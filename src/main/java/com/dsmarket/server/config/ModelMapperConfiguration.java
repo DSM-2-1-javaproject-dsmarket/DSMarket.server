@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ModelMapperConfiguration {
+class ModelMapperConfiguration {
 
     @Bean
     ModelMapper modelMapper(){
@@ -14,7 +14,9 @@ public class ModelMapperConfiguration {
                 .getConfiguration()
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
                 .setFieldMatchingEnabled(true);
+
+//        modelMapper.addMappings(new CommentMap());
+
         return modelMapper;
     }
-
 }

@@ -1,5 +1,7 @@
 package com.dsmarket.server.entities.account;
 
+import com.dsmarket.server.entities.comment.Comment;
+import com.dsmarket.server.entities.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +10,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,6 +19,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Account {
+
     @Id
     private String id;
 
@@ -26,4 +31,11 @@ public class Account {
 
     @Column(length = 40, nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "wroteAccount")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "wroteAccount")
+    private List<Post> posts;
+
 }

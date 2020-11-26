@@ -1,5 +1,7 @@
 package com.dsmarket.server.services.post;
 
+import com.dsmarket.server.dto.CreatePostForm;
+import com.dsmarket.server.dto.UpdatePostDto;
 import com.dsmarket.server.entities.account.Account;
 import com.dsmarket.server.entities.post.Post;
 import org.springframework.data.domain.Pageable;
@@ -18,5 +20,5 @@ public interface PostService {
 
     public void deletePost(Post post);
 
-    public Post updatePost(Post post, CreatePostForm postInfo);
+    public Post updatePost(Post post, UpdatePostDto postInfo);
 }

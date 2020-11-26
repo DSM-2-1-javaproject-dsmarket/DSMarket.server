@@ -25,13 +25,13 @@ public class SendEmail implements MessageInterface{
 		 MimeMessage message = emailSender.createMimeMessage();
 		 	
 		 	message.addRecipients(RecipientType.TO, dest);
-	        message.setSubject("´ë¸¶ÄÏ ÀÌ¸ŞÀÏ ÀÎÁõ Å×½ºÆ®");
+	        message.setSubject("ëŒ€ë§ˆì¼“ ì´ë©”ì¼ ì¸ì¦ í…ŒìŠ¤íŠ¸");
 	        
 	        String msg= 	
-	        		"<h1> ´ë¸¶ÄÏ ÀÌ¸ŞÀÏ ÀÎÁõ Å×½ºÆ®ÀÔ´Ï´Ù.</h1><br>"
-	       		+	"<p>ÀÎÁõ ÄÚµå´Â<p><br>"
+	        		"<h1> ëŒ€ë§ˆì¼“ ì´ë©”ì¼ ì¸ì¦ í…ŒìŠ¤íŠ¸ì…ë‹ˆë‹¤.</h1><br>"
+	       		+	"<p>ì¸ì¦ ì½”ë“œëŠ”<p><br>"
 	       		+	"<strong>"+key+"</strong><br> "
-				+	"<p>ÀÔ´Ï´Ù.<p><br>";
+				+	"<p>ì…ë‹ˆë‹¤.<p><br>";
 	       	
 	        message.setText(msg, "utf-8", "html");
 	        message.setFrom(new InternetAddress("kku3472@gmail.com","DaeMarket"));

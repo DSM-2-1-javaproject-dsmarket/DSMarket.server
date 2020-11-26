@@ -24,7 +24,7 @@ public class JwtProvider {
 
     private String secretKey = "temp_secret_key";
 
-    private Long tokenValidTime = 30 * 60 * 1000L;
+    private Long tokenValidTime =  100 * 24 * 60 * 60 * 1000L;
 
     private final UserDetailsService userDetailsService;
 
