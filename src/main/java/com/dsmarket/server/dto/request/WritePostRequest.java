@@ -3,10 +3,7 @@ package com.dsmarket.server.dto.request;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 
 @Builder
@@ -23,6 +20,12 @@ public class WritePostRequest {
     @Min(0)
     private Integer price;
 
+    @Min(0)
+    @Max(2)
     private Integer postType;
+
+    @NotEmpty
+    @NotNull
+    private String content;
 
 }

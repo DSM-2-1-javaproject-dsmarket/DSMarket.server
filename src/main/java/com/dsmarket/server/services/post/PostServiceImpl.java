@@ -1,10 +1,13 @@
 package com.dsmarket.server.services.post;
 
 
+import com.dsmarket.server.dto.CreatePostForm;
+import com.dsmarket.server.dto.UpdatePostDto;
 import com.dsmarket.server.entities.account.Account;
 import com.dsmarket.server.entities.post.Post;
 import com.dsmarket.server.entities.post.repository.PostRepository;
 import com.dsmarket.server.exeptions.AccessDeniedException;
+import com.dsmarket.server.exeptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
@@ -29,10 +32,11 @@ public class PostServiceImpl implements PostService {
                 .builder()
                 .postDate(now)
                 .postType(postInfo.getPostType())
-                .postUser(postInfo.getPostAccountId())
+                .wroteAccount(postInfo.getPostAccount())
                 .price(postInfo.getPrice())
                 .item(postInfo.getItem())
                 .tag(postInfo.getTag())
+                .content(postInfo.getContent())
                 .build();
 
         return postRepository.save(newPost);
@@ -41,7 +45,7 @@ public class PostServiceImpl implements PostService {
 
     public Post getPost(Integer id){
         return postRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(NotFoundException::new);
     }
 
 
@@ -51,7 +55,7 @@ public class PostServiceImpl implements PostService {
 
 
     public void checkPostEditAuthorization(Account account, Post post){
-        if(!account.getId().equals(post.getPostUser())){
+        if(!account.equals(post.getWroteAccount())){
             throw new AccessDeniedException();
         }
     }
@@ -61,12 +65,12 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(post);
     }
 
-    public Post updatePost(Post post, CreatePostForm postInfo){
+    public Post updatePost(Post post, UpdatePostDto postInfo){
         Post updatedPost = Post
                 .builder()
                 .postDate(post.getPostDate())
                 .postType(postInfo.getPostType())
-                .postUser(postInfo.getPostAccountId())
+                .wroteAccount(postInfo.getPostAccount())
                 .price(postInfo.getPrice())
                 .item(postInfo.getItem())
                 .tag(postInfo.getTag())

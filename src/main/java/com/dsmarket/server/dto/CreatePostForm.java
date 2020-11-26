@@ -1,6 +1,7 @@
-package com.dsmarket.server.services.post;
+package com.dsmarket.server.dto;
 
 
+import com.dsmarket.server.entities.account.Account;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,7 +11,7 @@ public class CreatePostForm {
 
     private Integer postType;
 
-    private String postAccountId;
+    private Account postAccount;
 
     private Integer price;
 
@@ -18,4 +19,5 @@ public class CreatePostForm {
 
     private String tag;
 
+    private String content;
 }
