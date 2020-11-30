@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -40,9 +41,11 @@ public class PostController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public WritePostResponse writePost(@RequestBody @Valid WritePostRequest writePostRequest){
+    public WritePostResponse writePost(@ModelAttribute(value = "json") @Valid WritePostRequest writePostRequest,
+                                       @RequestParam(value = "images") List<MultipartFile> images){
 
         Account writeAccount = accountService.getAccountById(requestAuthentication.getAccountId());
+
 
         Post wrotePost = postService.createPost(
                 CreatePostForm
