@@ -40,12 +40,16 @@ public class PostController {
 
     private final ModelMapper modelMapper;
 
+
     @PostMapping
     public WritePostResponse writePost(@ModelAttribute(value = "json") @Valid WritePostRequest writePostRequest,
                                        @RequestParam(value = "images") List<MultipartFile> images){
 
+
+
         Account writeAccount = accountService.getAccountById(requestAuthentication.getAccountId());
 
+        MultipartFile a;
 
         Post wrotePost = postService.createPost(
                 CreatePostForm

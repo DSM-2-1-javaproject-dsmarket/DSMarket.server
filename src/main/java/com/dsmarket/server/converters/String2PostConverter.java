@@ -1,4 +1,4 @@
-package com.dsmarket.server.controllers;
+package com.dsmarket.server.converters;
 
 import com.dsmarket.server.dto.request.WritePostRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
