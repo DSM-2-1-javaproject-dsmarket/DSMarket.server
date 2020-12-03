@@ -1,4 +1,4 @@
-package com.dsmarket.server.security;
+package com.dsmarket.server.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +17,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+
+import com.dsmarket.server.security.JwtAuthenticationFilter;
+import com.dsmarket.server.security.JwtProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -53,7 +56,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/accounts/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/accounts/register").permitAll()
                 .antMatchers(HttpMethod.GET,"/posts").permitAll()
-                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
                         UsernamePasswordAuthenticationFilter.class);

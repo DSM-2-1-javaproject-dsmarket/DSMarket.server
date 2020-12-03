@@ -30,6 +30,6 @@ public class AuthServiceImpl implements AuthService{
     }
 
     public void temp() {
-        accountRepository.save(Account.builder().email("fefe").id("fefe").nickName("fefe").password(passwordEncoder.encode("qwer")).build());
+        accountRepository.save(Account.builder().email("fefe").id("fefe").nickname("fefe").password(passwordEncoder.encode("qwer")).build());
     }
 }

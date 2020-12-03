@@ -27,7 +27,7 @@ public class Account {
     private String password;
 
     @Column(length = 20, nullable = false, unique = true)
-    private String nickName;
+    private String nickname;
 
     @Column(length = 40, nullable = false, unique = true)
     private String email;
