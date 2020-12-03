@@ -1,4 +1,4 @@
-package com.dsmarket.server.security;
+package com.dsmarket.server.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.dsmarket.server.security.JwtAuthenticationFilter;
+import com.dsmarket.server.security.JwtProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -39,9 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/accounts/auth").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/posts").permitAll()
-                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
                         UsernamePasswordAuthenticationFilter.class);

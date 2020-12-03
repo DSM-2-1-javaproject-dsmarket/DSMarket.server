@@ -10,6 +10,7 @@ import com.dsmarket.server.services.mail.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,9 @@ public class AccountController
 	
 	@Autowired
 	private RedisTemplate<String, Object> rt;
+	
+	@Autowired
+	private PasswordEncoder pe;
 	
 	@PostMapping("/validate")
 	@ResponseBody
@@ -45,7 +49,7 @@ public class AccountController
 			ar.save(Account
 					.builder()
 					.id(reg.getId())
-					.password(reg.getPassword())
+					.password(pe.encode(reg.getPassword()))
 					.nickname(reg.getNickname())
 					.email(reg.getEmail())
 					.build());
