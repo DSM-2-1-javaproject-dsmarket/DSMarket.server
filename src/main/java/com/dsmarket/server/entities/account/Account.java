@@ -18,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Account {
 
-    @Id
+    @Id()
+    @Column(length = 50)
     private String id;
 
     @Column(nullable = false)
@@ -36,7 +37,7 @@ public class Account {
     @OneToMany(mappedBy = "wroteAccount")
     private List<Post> posts;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "profile_image_id", referencedColumnName = "id")
     private Image profileImage;
 
