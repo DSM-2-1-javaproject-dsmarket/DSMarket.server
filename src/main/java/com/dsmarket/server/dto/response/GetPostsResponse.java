@@ -31,4 +31,6 @@ public class GetPostsResponse {
 
     private Boolean finished;
 
+    private String itemImageUrl;
+
 }

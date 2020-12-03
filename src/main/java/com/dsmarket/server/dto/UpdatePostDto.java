@@ -18,4 +18,6 @@ public class UpdatePostDto {
 
     private String tag;
 
+    private String content;
+
 }

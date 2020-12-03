@@ -2,6 +2,7 @@ package com.dsmarket.server.dto;
 
 
 import com.dsmarket.server.entities.account.Account;
+import com.dsmarket.server.entities.image.Image;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,4 +21,7 @@ public class CreatePostForm {
     private String tag;
 
     private String content;
+
+    private Image itemImage;
+
 }

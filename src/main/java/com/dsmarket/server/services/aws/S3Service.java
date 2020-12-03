@@ -2,8 +2,9 @@ package com.dsmarket.server.services.aws;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public interface S3Service {
+import java.io.File;
 
-    public Integer uploadFile(MultipartFile file);
+public interface S3Service {
+    public String upload(MultipartFile multipartFile, String dirName);
 
 }

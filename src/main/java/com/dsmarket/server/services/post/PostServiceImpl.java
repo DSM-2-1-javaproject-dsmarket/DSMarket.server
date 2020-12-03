@@ -37,6 +37,7 @@ public class PostServiceImpl implements PostService {
                 .item(postInfo.getItem())
                 .tag(postInfo.getTag())
                 .content(postInfo.getContent())
+                .itemImage(postInfo.getItemImage())
                 .build();
 
         return postRepository.save(newPost);
@@ -77,8 +78,9 @@ public class PostServiceImpl implements PostService {
                 .id(post.getId())
                 .finished(post.getFinished())
                 .view(post.getView())
+                .itemImage(post.getItemImage())
+                .content(postInfo.getContent())
                 .build();
-
 
         return postRepository.save(updatedPost);
     }

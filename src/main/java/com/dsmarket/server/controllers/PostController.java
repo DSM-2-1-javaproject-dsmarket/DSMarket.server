@@ -10,10 +10,14 @@ import com.dsmarket.server.dto.response.GetPostsResponse;
 import com.dsmarket.server.dto.response.WritePostResponse;
 import com.dsmarket.server.entities.account.Account;
 import com.dsmarket.server.entities.comment.Comment;
+import com.dsmarket.server.entities.image.Image;
 import com.dsmarket.server.entities.post.Post;
 import com.dsmarket.server.security.account_detail.RequestAuthentication;
 import com.dsmarket.server.services.account.AccountService;
 import com.dsmarket.server.dto.CreatePostForm;
+import com.dsmarket.server.services.aws.S3Service;
+import com.dsmarket.server.services.aws.S3ServiceImpl;
+import com.dsmarket.server.services.image.ImageService;
 import com.dsmarket.server.services.post.PostService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,20 +41,24 @@ public class PostController {
 
     private final AccountService accountService;
 
+    private final ImageService imageService;
+
     private final RequestAuthentication requestAuthentication;
 
     private final ModelMapper modelMapper;
 
+    private final S3Service s3Service;
 
     @PostMapping
     public WritePostResponse writePost(@ModelAttribute(value = "json") @Valid WritePostRequest writePostRequest,
-                                       @RequestParam(value = "images") List<MultipartFile> images){
-
-
-
+                                       @RequestParam(value = "image") MultipartFile image){
         Account writeAccount = accountService.getAccountById(requestAuthentication.getAccountId());
 
-        MultipartFile a;
+        Image itemImage = null;
+        if(image != null){
+            String imageUrl = s3Service.upload(image, "image");
+            itemImage = imageService.createImage(imageUrl);
+        }
 
         Post wrotePost = postService.createPost(
                 CreatePostForm
@@ -60,6 +69,7 @@ public class PostController {
                         .price(writePostRequest.getPrice())
                         .postAccount(writeAccount)
                         .content(writePostRequest.getContent())
+                        .itemImage(itemImage)
                         .build()
         );
 
@@ -77,15 +87,52 @@ public class PostController {
                 , pageRequest.getDirection()
                 , "id"
         ));
+        List<GetPostsResponse> responses = new ArrayList<GetPostsResponse>();
 
-        return posts.stream()
-                .map((e)-> modelMapper.map(e, GetPostsResponse.class))
-                .collect(Collectors.toList());
+        for(int i = 0; i < posts.size(); i++){
+            Post post = posts.get(i);
+
+            GetPostsResponse response = GetPostsResponse
+                    .builder()
+                    .finished(post.getFinished())
+                    .item(post.getItem())
+                    .id(post.getId())
+                    .itemImageUrl(post.getItemImage().getUrl())
+                    .postDate(post.getPostDate())
+                    .postType(post.getPostType())
+                    .postUser(post.getWroteAccount().getId())
+                    .price(post.getPrice())
+                    .tag(post.getTag())
+                    .view(post.getView())
+                    .build();
+
+            responses.add(response);
+        }
+        return responses;
+
+//        return posts.stream()
+//                .map((e)-> modelMapper.map(e, GetPostsResponse.class))
+//                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     GetPostResponse getPost(@PathVariable Integer id){
-        return modelMapper.map(postService.getPost(id), GetPostResponse.class);
+        Post post = postService.getPost(id);
+        return GetPostResponse.builder()
+                .content(post.getContent())
+                .finished(post.getFinished())
+                .item(post.getItem())
+                .id(post.getId())
+                .itemImageUrl(post.getItemImage().getUrl())
+                .postDate(post.getPostDate())
+                .postType(post.getPostType())
+                .postUser(post.getWroteAccount().getId())
+                .price(post.getPrice())
+                .tag(post.getTag())
+                .view(post.getView())
+                .build();
+
+//        return modelMapper.map(postService.getPost(id), GetPostResponse.class);
     }
 
 
@@ -113,6 +160,7 @@ public class PostController {
                         .postType(writePostRequest.getPostType())
                         .price(writePostRequest.getPrice())
                         .tag(writePostRequest.getTag())
+                        .content(writePostRequest.getContent())
                         .build()
         );
     }

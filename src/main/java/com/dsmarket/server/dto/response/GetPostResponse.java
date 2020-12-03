@@ -33,4 +33,7 @@ public class GetPostResponse {
     private Boolean finished;
 
     private String content;
+
+    private String itemImageUrl;
+
 }

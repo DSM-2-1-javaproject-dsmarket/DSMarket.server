@@ -3,6 +3,7 @@ package com.dsmarket.server.entities.post;
 
 import com.dsmarket.server.entities.account.Account;
 import com.dsmarket.server.entities.comment.Comment;
+import com.dsmarket.server.entities.image.Image;
 import com.dsmarket.server.entities.post.repository.PostRepository;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -56,6 +57,10 @@ public class Post {
 
     @OneToMany(mappedBy = "wrotePost")
     private List<Comment> comments;
+
+    @OneToOne
+    @JoinColumn(name = "item_image_id", referencedColumnName = "id")
+    private Image itemImage;
 
     public Post increaseView(){
         this.view += 1;
